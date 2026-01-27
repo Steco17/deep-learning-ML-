@@ -1,0 +1,123 @@
+# Perceptron Logic Gates (AND, OR, NAND, NOR, NOT, XOR)
+
+This repo shows what a **perceptron** is by building classic **logic gates** with it.
+
+You’ll implement a single perceptron (a simple binary classifier) and use it to reproduce the truth tables for:
+
+- AND
+- OR
+- NAND
+- NOR
+- NOT
+- XOR (needs multiple perceptrons)
+
+It also includes a test file that verifies every gate automatically.
+
+---
+
+## What is a perceptron?
+
+A perceptron is the simplest “neural network unit”. It takes inputs, computes a weighted sum, adds a bias, then produces a binary decision.
+
+### Step 1: Weighted sum
+
+\[
+z = w \cdot x + b
+\]
+
+- `x` = input vector (e.g. `[0, 1]`)
+- `w` = weight vector (importance of each input)
+- `b` = bias (shifts the decision boundary)
+
+### Step 2: Step activation
+
+\[
+output =
+\begin{cases}
+1 & \text{if } z \ge 0 \\
+0 & \text{if } z < 0
+\end{cases}
+\]
+
+This makes the perceptron a **linear classifier**: it separates the input space with a straight line (in 2D).
+
+---
+
+## What we are doing in this project
+
+### 1) Implement the perceptron
+
+`perceptron.py` contains:
+- `step(z)` activation function
+- `perceptron(x, w, b)` prediction function
+
+### 2) Hardcode weights for logic gates
+
+Logic gates are perfect for learning perceptrons because inputs and outputs are binary and easy to verify.
+
+Examples:
+- AND outputs 1 only for `[1, 1]`
+- OR outputs 1 if any input is 1
+- NAND is the inverse of AND
+- NOR is the inverse of OR
+- NOT uses a single input
+
+### 3) XOR needs more than one perceptron
+
+XOR is not linearly separable, so a single perceptron can’t do it.
+
+We implement XOR using a **2-layer composition**:
+
+\[
+XOR(x,y) = AND(OR(x,y), NAND(x,y))
+\]
+
+That’s the simplest demonstration of why multi-layer networks exist.
+
+### 4) Test everything automatically
+
+`test_logic_gates.py` imports `perceptron.py` and checks that every gate matches its truth table using assertions.
+
+---
+
+## Requirements
+
+- Python 3.9+ recommended
+- NumPy
+
+Install:
+
+```bash
+pip install numpy
+```
+## How to run the tests
+
+From the project folder:
+```bash
+python test_logic_gates.py
+```
+
+If everything is correct, you should see:
+```bash
+All perceptron gate tests passed
+```
+## Issue Faced: NAND failing for [1, 1]
+
+If you see:
+
+```bash
+AssertionError: NAND failed for [1, 1]
+```
+
+Check your step function.
+
+It must be:
+
+```bash
+def step(z):
+    return 1 if z >= 0 else 0
+```
+
+If you use z > 0 instead of z >= 0, some gates can break due to threshold edge cases.
+
+You can also give yourself a bit more margin by using biases like 1.6 instead of 1.5 for NAND if needed.
