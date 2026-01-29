@@ -5,9 +5,9 @@ import matplotlib.pyplot as plt
 from  matplotlib import style
 
 # Simple Linear Regression from scratch
-xs = np.array([1, 2, 3, 4, 5, 9, 20], dtype=np.float64)
+xs = np.array([1, 2, 3, 4, 5, 9,12, 20], dtype=np.float64)
 
-ys = np.array([5, 4, 6, 5, 6, 7, 18], dtype=np.float64)
+ys = np.array([5, 4, 6, 5, 6, 7, 15, 18], dtype=np.float64)
 
 def best_fit_slope_and_intercept(xs, ys):
     m = ( ((mean(xs) * mean(ys)) - mean(xs * ys)) /
